@@ -2,6 +2,21 @@ locals {
   name = format("%s-%s", var.name, terraform.workspace)
 }
 
+data "aws_ami" "this" {
+  most_recent = true
+  owners      = ["self"]
+
+  filter {
+    name   = "name"
+    values = [var.ami_filter]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+}
+
 resource "aws_launch_template" "this" {
   name_prefix = format("%s-", local.name)
 
@@ -9,7 +24,7 @@ resource "aws_launch_template" "this" {
     arn = aws_iam_instance_profile.this.arn
   }
 
-  image_id  = var.image_id
+  image_id  = data.aws_ami.this.id
   key_name  = var.key_name
   user_data = base64encode(templatefile("user_data.sh.tmpl", { cluster = var.cluster, zerotier_network = var.zerotier_network }))
 
