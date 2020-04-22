@@ -8,5 +8,8 @@ variable "instance_types" {
 variable "key_name" {
   default = "default"
 }
+variable "ami_owner" {
+  default = "self"
+}
 variable "ami_filter" {}
 variable "subnet_id" {}
