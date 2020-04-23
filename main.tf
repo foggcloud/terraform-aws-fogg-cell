@@ -36,8 +36,8 @@ resource "aws_autoscaling_group" "this" {
 
   vpc_zone_identifier   = [var.subnet_id]
   min_size              = 0
-  max_size              = 1
-  desired_capacity      = 1
+  max_size              = 0
+  desired_capacity      = 0
   protect_from_scale_in = false
 
   mixed_instances_policy {
