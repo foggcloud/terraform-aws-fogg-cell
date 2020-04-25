@@ -77,15 +77,6 @@ resource "aws_security_group" "this" {
   vpc_id = var.vpc_id
 }
 
-resource "aws_security_group_rule" "ssh" {
-  type              = "ingress"
-  from_port         = 22
-  to_port           = 22
-  protocol          = "tcp"
-  cidr_blocks       = ["96.78.173.54/32"]
-  security_group_id = aws_security_group.this.id
-}
-
 resource "aws_security_group_rule" "zerotier" {
   type              = "ingress"
   from_port         = 9993
